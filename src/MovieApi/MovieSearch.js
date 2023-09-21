@@ -1,64 +1,72 @@
 import React, { useState, useEffect } from 'react';
 
 function MovieSearch() {
+
+  //On crée une state variable ou on va store toutes les valeus de l'objet de l'API
   const [searchResult, setSearchResult] = useState([]);
+
+  //On crée une variable pour store l'erreur si le fetch ne se fait pas
   const [error, setError] = useState('');
 
+  //On crée une state variable pour store la value de l'input
+  const [title, setTitle] = useState('');
+  //L'event handler sera donné à onChange de l'input
+  const handleTitle = (e) => setTitle(e.target.value);
+
+  //On utilise useEffect pour que la data soit fetch quand on va changer le titre écrit dans l'input
+  //Là on va utiliser la syntax de fetch.api qui est intégré à VScode
   useEffect(() => {
-    const fetchData = async () => {
-      //A la place de game à la fin, qui est le titre d'un fil, on met la value state d'un inputqu'on va créer en bas, pour pouvoir chercher toutes les images de tous les films
-      const url = 'https://imdb8.p.rapidapi.com/auto-complete?q=game';
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': '8354168104mshfc3df6799c7f5d9p1f2232jsn0d943433ae01',
-          'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
-        }
-      };
+  
+    //On crée une arrow function qui va etre asynchrone, donc qui pourra fetché la data, même si le return apparait. 
+    const fetchData = async () => {//Quand on écrit async, il faut écrire awwait plus tard
+      const apiKey = 'a8bb9980efd4d285e65c1874324f444e'; //notre Api key qui permet au site de savoir combien de fois on a fetch la data
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}`; //L'url de l'api, avec en endpoint l'apikey et à la fin {title} pour que query soit == à la value de l'input (on a écrit query juste parce que c'est comme ça dans le site)
 
-      try {
-        //fetch = on cherche la data: on aurait pu écrire les url en haut
-        const response = await fetch(url, options);
+      try {//Syntax à connaitre
+        const response = await fetch(url);//fetch la data de l'url
 
-        if (response.ok) {
-          const result = await response.json();
-          setSearchResult(result.d);
-        } 
-        //1ère erreur de s'il ne fetch pas: s'il ne va même pas chercher la data
-        else {
+        if (response.ok) {//Si fetch marche
+          const result = await response.json();//On transforme la data en json() et on store dans la variable result
+          setSearchResult(result.results); // et ensuite on update  la state variable serachResult avec la "results" array for movie data
+        } else {//Si fetch ne marche pas écrit:
           throw new Error('Network response was not ok');
         }
-      } 
-      //2ème erreur de s'il ne trouve pas la data qu'il est allé fetcher
-      catch (error) {
+      } catch (error) {//Si fetch a marché mais qu'ensuite on en trouve pas la data écrit
         setError('An error occurred while fetching data.');
       }
     };
-
-    fetchData();
-  }, []);
+    //Fin de l'arrow function du useEffect
+    fetchData();//Appel de l'arrow function pour l'activer
+  
+  }, [title]);//[title] veut dire que le useEffect s'activera et va fetch la data, à chaque fois que le titre de l'input (state variable) chanegra
 
   return (
-    <div>
-      {error ? (
-        <p>Error: {error}</p>
-      ) : (
-        <div>
-          <h1>Search Results</h1>
-          <ul>
-            {searchResult.map((item) => (
-              <li key={item.id}>
-                <h2>{item.l}</h2>
-                {item.q && <p>Type: {item.q}</p>}
-                {item.y && <p>Year: {item.y}</p>}
-                <img src={item.i.imageUrl} alt={item.l} />
-              </li>
-            ))}
-          </ul>
-          <h1>heeeeeeeeeeeeeey i am here</h1>
-        </div>
-      )}
-    </div>
+    <>
+      <div>
+        <input value={title} onChange={handleTitle} type="text" />
+      </div>
+      <div>
+        {error ? (//Si erreur,
+          <p>Error: {error}</p>//Montre la value de erreur
+        ) : ( //sinon affiche:
+          <div>
+            <h1>Search Results</h1>
+            <ul>
+              {searchResult.map((item) => (//on map sur la state variable qui contient l'array avec tous les films de la movie app
+              //On peut trouver les nom des property dans l'API
+                <li key={item.id}>  
+                  <h2>{item.title}</h2> {/* Use "title" for movie title */}
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+                    alt={item.title} // Use "title" for alt text
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
