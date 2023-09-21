@@ -18,7 +18,7 @@ function MovieSearch() {
   useEffect(() => {
   
     //On crée une arrow function qui va etre asynchrone, donc qui pourra fetché la data, même si le return apparait. 
-    const fetchData = async () => {//Quand on écrit async, il faut écrire awwait plus tard
+    const fetchData = async () => {//Quand on écrit async, il faut écrire await plus tard
       const apiKey = 'a8bb9980efd4d285e65c1874324f444e'; //notre Api key qui permet au site de savoir combien de fois on a fetch la data
       const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}`; //L'url de l'api, avec en endpoint l'apikey et à la fin {title} pour que query soit == à la value de l'input (on a écrit query juste parce que c'est comme ça dans le site)
 
