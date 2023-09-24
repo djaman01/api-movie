@@ -5,7 +5,7 @@ import MovieSearch from './MovieApi/MovieSearch';
 function App() {
   return (
     <>
-    <MovieApi />
+    
     <MovieSearch/>
     
     </>

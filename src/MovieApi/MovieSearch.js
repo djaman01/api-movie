@@ -45,6 +45,9 @@ function MovieSearch() {
 
   return (
     <>
+    <div>
+    <h1>List of Movies</h1>
+    </div>
       <div>
         <input value={title} onChange={handleTitle} type="text" />
       </div>
