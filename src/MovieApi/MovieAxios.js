@@ -9,23 +9,22 @@ export default function MovieFetch() {
   const handleTitle = (e) => setTitle(e.target.value);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       const apiKey = 'f929f9583302a8f0d7430c5a660bf542';
       const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}`;
 
-      try {
-        const response = await axios.get(url); // Use Axios to make the GET request
-
-        if (response.status === 200) {
-          console.log("here is the result of the API", response.data);
-
-          setSearchResult(response.data.results);
-        } else {
-          throw new Error('Network response was not ok');
-        }
-      } catch (error) {
-        setError('An error occurred while fetching data.');
-      }
+      axios.get(url)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("here is the result of the API", response.data);
+            setSearchResult(response.data.results);
+          } else {
+            throw new Error('Network response was not ok');
+          }
+        })
+        .catch((error) => {
+          setError('An error occurred while fetching data.');
+        });
     };
 
     fetchData();
