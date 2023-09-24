@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios library
 
-export default function MovieFetch() {
+export default function MovieAxios() {
   const [searchResult, setSearchResult] = useState([]);
   const [error, setError] = useState('');
   const [title, setTitle] = useState('');
