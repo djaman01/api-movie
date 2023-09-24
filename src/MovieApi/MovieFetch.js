@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-function MovieSearch() {
+export default function MovieFetch() {
 
-  //On crée une state variable ou on va store toutes les valeus de l'objet de l'API
+  //On crée une state variable ou on va store toutes les valuEs de l'objet de l'API
   const [searchResult, setSearchResult] = useState([]);
 
   //On crée une variable pour store l'erreur si le fetch ne se fait pas
@@ -46,7 +46,7 @@ function MovieSearch() {
   return (
     <>
     <div>
-    <h1>List of Movies</h1>
+    <h1>List of Movies with Fetch Api</h1>
     </div>
       <div>
         <input value={title} onChange={handleTitle} type="text" />
@@ -76,4 +76,4 @@ function MovieSearch() {
   );
 }
 
-export default MovieSearch;
+

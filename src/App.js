@@ -1,12 +1,13 @@
-import MovieApi from './MovieApi/MovieApi';
+import MovieApi from './MovieApi/MovieAxios';
 import './App.css';
-import MovieSearch from './MovieApi/MovieSearch';
+import MovieFetch from './MovieApi/MovieFetch';
+import MovieAxios from './MovieApi/MovieAxios';
 
 function App() {
   return (
     <>
     
-    <MovieSearch/>
+    <MovieAxios />
     
     </>
   )
