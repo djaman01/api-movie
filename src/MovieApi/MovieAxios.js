@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Import Axios library
+import axios from 'axios';
 
 export default function MovieAxios() {
   const [searchResult, setSearchResult] = useState([]);
@@ -15,12 +15,8 @@ export default function MovieAxios() {
 
       axios.get(url)
         .then((response) => {
-          if (response.status === 200) {
-            console.log("here is the result of the API", response.data);
-            setSearchResult(response.data.results);
-          } else {
-            throw new Error('Network response was not ok');
-          }
+          console.log("here is the result of the API", response.data);
+          setSearchResult(response.data.results);
         })
         .catch((error) => {
           setError('An error occurred while fetching data.');
